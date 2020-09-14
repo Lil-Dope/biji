@@ -1,0 +1,429 @@
+Message-ID: <544075970.463467.1600049468139.JavaMail.root@maven01v-ap>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_463466_1286712680.1600049468138"
+
+------=_Part_463466_1286712680.1600049468138
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>svn=EF=BC=88cp=EF=BC=89=E8=BF=81=E7=A7=BBgit</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: #fff !important;
+        color: #000 !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: #000;
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>svn=EF=BC=88cp=EF=BC=89=E8=BF=81=E7=A7=BBgit</h1>
+    <div class=3D"Section1">
+        <div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeHeader panelHeader pdl" style=3D"border-bottom-width: 1px=
+;">
+<b>svn2git.sh</b>
+</div>
+<div class=3D"codeContent panelContent pdl">=20
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: bash; gutter: true; theme: Confluence" data-theme=3D"Confluence">#!/bin/s=
+h
+
+# =E6=8F=90=E5=8F=96svn=E6=89=80=E6=9C=89=E6=8F=90=E4=BA=A4=E8=80=85=E5=90=
+=8D=E5=AD=97
+# svn log --xml | grep "^&lt;author" | sort -u | awk -F '&lt;author&gt;|&lt=
+;/author&gt;' '{printf("%s =3D %s &lt;%s@yutong.com&gt;\n", $2, $2, $2)}' &=
+gt; users.txt
+
+# --no-metadata =E9=98=BB=E6=AD=A2 git svn =E5=8C=85=E5=90=AB=E9=82=A3=E4=
+=BA=9B Subversion =E7=9A=84=E9=99=84=E5=8A=A0=E4=BF=A1=E6=81=AF
+# --authors-file SVN=E8=B4=A6=E5=8F=B7=E6=98=A0=E5=B0=84=E5=88=B0git=E8=B4=
+=A6=E5=8F=B7=E6=96=87=E4=BB=B6=EF=BC=8C=E6=89=80=E6=9C=89svn=E4=BD=9C=E8=80=
+=85=E9=83=BD=E8=A6=81=E5=81=9A=E6=98=A0=E5=B0=84
+# --trunk=E8=A1=A8=E7=A4=BA=E4=B8=BB=E5=BC=80=E5=8F=91=E9=A1=B9=E7=9B=AE
+# --branches=E8=A1=A8=E7=A4=BA=E5=88=86=E6=94=AF=E9=A1=B9=E7=9B=AE
+# --tags=E8=A1=A8=E7=A4=BA=E6=A0=87=E7=AD=BE=E9=A1=B9=E7=9B=AE
+# -s stdlayout
+git svn clone https://10.8.0.53:8443/svn/code/Vehicle+/CP --no-metadata --a=
+uthors-file=3Dusers.txt -s cp2.0
+
+cd cp2.0
+###########################################################################=
+#############
+# =E6=8A=8A=E6=89=80=E6=9C=89=E7=9A=84=E6=97=A7=E5=88=86=E6=94=AF=E9=83=BD=
+=E5=8F=98=E6=88=90=E7=9C=9F=E6=AD=A3=E7=9A=84 Git =E5=88=86=E6=94=AF=EF=BC=
+=8C=E6=89=80=E6=9C=89=E7=9A=84=E6=97=A7=E6=A0=87=E7=AD=BE=E4=B9=9F=E5=8F=98=
+=E6=88=90=E7=9C=9F=E6=AD=A3=E7=9A=84 Git =E6=A0=87=E7=AD=BE               #
+###########################################################################=
+#############
+# v1 =E6=96=B9=E5=BC=8F=E4=B8=80                                           =
+                                 #
+###########################################################################=
+#############
+# =E6=8A=8A=E6=A0=87=E7=AD=BE=E5=8F=98=E6=88=90=E5=90=88=E9=80=82=E7=9A=84 =
+Git =E6=A0=87=E7=AD=BE
+# =E5=B0=86=E5=8E=9F=E6=9C=AC=E4=BB=A5 tag/ =E5=BC=80=E5=A4=B4=E7=9A=84=E8=
+=BF=9C=E7=A8=8B=E5=88=86=E6=94=AF=E7=9A=84=E7=B4=A2=E5=BC=95=E5=8F=98=E6=88=
+=90=E7=9C=9F=E6=AD=A3=E7=9A=84=EF=BC=88=E8=BD=BB=E5=B7=A7=E7=9A=84=EF=BC=89=
+=E6=A0=87=E7=AD=BE
+git for-each-ref refs/remotes/tags | cut -d / -f 4- | grep -v @ | while rea=
+d tagname; do git tag "$tagname" "tags/$tagname"; git branch -r -d "tags/$t=
+agname"; done
+# =E6=8A=8A refs/remotes =E4=B8=8B=E9=9D=A2=E5=89=A9=E4=B8=8B=E7=9A=84=E7=
+=B4=A2=E5=BC=95=E5=8F=98=E6=88=90=E6=9C=AC=E5=9C=B0=E5=88=86=E6=94=AF
+git for-each-ref refs/remotes | cut -d / -f 3- | grep -v @ | while read bra=
+nchname; do git branch "$branchname" "refs/remotes/$branchname"; git branch=
+ -r -d "$branchname"; done
+###########################################################################=
+#############
+# v2 =E6=96=B9=E5=BC=8F=E4=BA=8C                                           =
+                                 #
+###########################################################################=
+#############
+## =E5=8E=9F=E6=9D=A5=E5=9C=A8 remotes/origin/tags/ =E9=87=8C=E7=9A=84=E8=
+=BF=9C=E7=A8=8B=E5=88=86=E6=94=AF=E5=BC=95=E7=94=A8=E5=8F=98=E6=88=90=E7=9C=
+=9F=E6=AD=A3=E7=9A=84=EF=BC=88=E8=BD=BB=E9=87=8F=EF=BC=89=E6=A0=87=E7=AD=BE
+#cp -Rf .git/refs/remotes/origin/tags/* .git/refs/tags/
+#rm -Rf .git/refs/remotes/origin/tags
+## =E5=B0=86 refs/remotes =E4=B8=8B=E5=89=A9=E4=BD=99=E7=9A=84=E5=BC=95=E7=
+=94=A8=E7=A7=BB=E5=8A=A8=E4=B8=BA=E6=9C=AC=E5=9C=B0=E5=88=86=E6=94=AF
+#cp -Rf .git/refs/remotes/* .git/refs/heads/
+#rm -Rf .git/refs/remotes
+###########################################################################=
+#############
+# v3 =E6=96=B9=E5=BC=8F=E4=B8=89                                           =
+                                 #
+###########################################################################=
+#############
+## =E5=8E=9F=E6=9D=A5=E5=9C=A8 remotes/origin/tags/ =E9=87=8C=E7=9A=84=E8=
+=BF=9C=E7=A8=8B=E5=88=86=E6=94=AF=E5=BC=95=E7=94=A8=E5=8F=98=E6=88=90=E7=9C=
+=9F=E6=AD=A3=E7=9A=84=EF=BC=88=E8=BD=BB=E9=87=8F=EF=BC=89=E6=A0=87=E7=AD=BE
+#cp -Rf .git/refs/remotes/tags/* .git/refs/tags/
+#rm -Rf .git/refs/remotes/tags
+## =E5=B0=86 refs/remotes =E4=B8=8B=E5=89=A9=E4=BD=99=E7=9A=84=E5=BC=95=E7=
+=94=A8=E7=A7=BB=E5=8A=A8=E4=B8=BA=E6=9C=AC=E5=9C=B0=E5=88=86=E6=94=AF
+#cp -Rf .git/refs/remotes/* .git/refs/heads/
+#rm -Rf .git/refs/remotes
+###########################################################################=
+#############
+# =E9=81=97=E7=95=99=E9=97=AE=E9=A2=98                                     =
+                                        #
+###########################################################################=
+#############
+# git branch -avv=EF=BC=8C=E5=8F=AF=E4=BB=A5=E7=9C=8B=E5=88=B0=E8=BF=98=E6=
+=9C=89=E4=B8=80=E4=BA=9Bremotes/v2.7@33495=E3=80=81remotes/v2.7@70224=E7=AD=
+=89=E5=B8=A6@=E7=9A=84=E5=88=86=E6=94=AF=EF=BC=8C
+# =E6=98=AF=E5=9C=A8=E5=B0=86=E6=97=A7=E5=88=86=E6=94=AF=E8=BD=AC=E6=8D=A2G=
+it=E5=88=86=E6=94=AF=E6=97=B6(grep -v @)=E9=81=97=E7=95=99=E4=B8=8B=E6=9D=
+=A5=E7=9A=84=EF=BC=8C=E7=9B=AE=E5=89=8D=E8=BF=98=E6=B2=A1=E6=9C=89=E6=90=9E=
+=E6=B8=85=E6=A5=9A=E6=98=AF=E4=BB=80=E4=B9=88=E4=B8=9C=E8=A5=BF=E3=80=82
+# $ git branch -a
+#  remotes/v2.7@33495
+#  remotes/v2.7@70224
+#  remotes/v2.8@33495
+#  remotes/v2.8@74064
+#  remotes/v2.9@33495
+#  remotes/v2.9@76008
+#  remotes/=E5=A4=A9=E8=BF=88=E7=BB=88=E7=AB=AF=E8=BF=81=E7=A7=BB@33495
+#  remotes/=E5=A4=A9=E8=BF=88=E7=BB=88=E7=AB=AF=E8=BF=81=E7=A7=BB@64902
+###########################################################################=
+#############
+
+# =E6=8A=8A=E6=96=B0=E5=BB=BA=E7=9A=84 Git =E6=9C=8D=E5=8A=A1=E5=99=A8=E6=
+=B7=BB=E5=8A=A0=E4=B8=BA=E8=BF=9C=E7=A8=8B=E6=9C=8D=E5=8A=A1=E5=99=A8=E5=B9=
+=B6=E4=B8=94=E5=90=91=E5=AE=83=E6=8E=A8=E9=80=81
+# =E5=85=88=E5=9C=A8=E8=BF=9C=E7=A8=8B=E6=9C=8D=E5=8A=A1=E5=99=A8(http://de=
+v.yutong.com:8090/cp)=E4=B8=8A"New Project"
+git remote add origin git@dev.yutong.com:cp/cp_v2.git
+
+# =E8=AE=A9=E6=89=80=E6=9C=89=E7=9A=84=E5=88=86=E6=94=AF=E5=92=8C=E6=A0=87=
+=E7=AD=BE=E9=83=BD=E5=BE=97=E5=88=B0=E4=B8=8A=E4=BC=A0
+git push origin --all
+git push origin --tags
+
+# over
+# =E6=89=80=E6=9C=89=E7=9A=84=E5=88=86=E6=94=AF=E5=92=8C=E6=A0=87=E7=AD=BE=
+=E7=8E=B0=E5=9C=A8=E9=83=BD=E5=BA=94=E8=AF=A5=E6=95=B4=E9=BD=90=E5=B9=B2=E5=
+=87=80=E7=9A=84=E8=BA=BA=E5=9C=A8=E6=96=B0=E7=9A=84 Git =E6=9C=8D=E5=8A=A1=
+=E5=99=A8=E9=87=8C=E4=BA=86
+git branch -avv
+
+
+&nbsp;
+# =E5=AE=9A=E6=9C=9F=E5=90=8C=E6=AD=A5SVN=E5=90=8E=E7=BB=AD=E6=8F=90=E4=BA=
+=A4=E7=9A=84=E4=BB=A3=E7=A0=81=E5=88=B0Git=E4=BB=93=E5=BA=93
+# =E5=BE=85=E7=BB=AD...
+&nbsp;
+# =E5=8F=82=E8=80=83
+# [Git-=E4=B8=8E=E5=85=B6=E4=BB=96=E7=B3=BB=E7=BB=9F-=E8=BF=81=E7=A7=BB=E5=
+=88=B0-Git]( https://git-scm.com/book/zh/v1/Git-%E4%B8%8E%E5%85%B6%E4%BB%96=
+%E7%B3%BB%E7%BB%9F-%E8%BF%81%E7%A7%BB%E5%88%B0-Git )
+# [Git-=E4=B8=8E=E5=85=B6=E4=BB=96=E7=B3=BB=E7=BB=9F-=E8=BF=81=E7=A7=BB=E5=
+=88=B0-Git]( https://git-scm.com/book/zh/v2/Git-%E4%B8%8E%E5%85%B6%E4%BB%96=
+%E7%B3%BB%E7%BB%9F-%E8%BF%81%E7%A7%BB%E5%88%B0-Git )
+# [=E3=80=90git=E5=AD=A6=E4=B9=A0=E3=80=91SVN=E9=A1=B9=E7=9B=AE=E8=BF=81=E7=
+=A7=BB=E5=88=B0Git=E6=93=8D=E4=BD=9C=E6=8C=87=E5=8D=97]( https://blog.csdn.=
+net/ouyang_peng/article/details/80372805 )</pre>=20
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Q=EF=BC=9A=E4=BD=BF=E7=94=A8=E4=B8=8A=E8=BF=B0=E6=96=B9=E6=B3=95=E4=BB=
+=8Esvn=E8=BD=AC=E6=8D=A2=E4=B8=BAgit=E5=87=BA=E7=8E=B0=E4=BB=A5=E4=B8=8B=E9=
+=94=99=E8=AF=AF=EF=BC=9A</p>
+<p>svn-remote.svn: remote ref '/10.8.0.53:8443/svn/code/=E9=80=9A=E4=BF=A1=
+=E5=B9=B3=E5=8F=B0=E7=A0=94=E5=8F=91/_1_=E5=BC=80=E5=8F=91=E5=BA=93/code/_1=
+_=E5=90=84=E9=A1=B9=E7=9B=AE=E5=88=86=E6=94=AF/_11_=E4=B8=8A=E6=B5=B7=E6=97=
+=A0=E8=BD=A8=E7=94=B5=E8=BD=A6/trunk:refs/remotes/trunk' must start with 'r=
+efs/'</p>
+<p>A=EF=BC=9A=E5=8F=82=E8=80=83 =EF=BC=9A&nbsp;<a class=3D"external-link" h=
+ref=3D"https://stackoverflow.com/questions/35900710/svn-to-git-conversion-c=
+orrect-remote-ref-must-start-with-refs-error" rel=3D"nofollow">https://stac=
+koverflow.com/questions/35900710/svn-to-git-conversion-correct-remote-ref-m=
+ust-start-with-refs-error</a></p>
+<p>=E4=BB=A5=E4=B8=8B=E6=98=AF=E4=BE=9D=E6=8D=AE=E6=AD=A4=E6=96=B9=E6=B3=95=
+=E5=AF=B9CMP=E9=A1=B9=E7=9B=AE=E7=9A=84=E8=BF=81=E7=A7=BB=E8=BF=87=E7=A8=8B=
+=EF=BC=9A</p>
+<p># =E5=88=9D=E5=A7=8B=E5=8C=96=E4=B8=80=E4=B8=AAsvn repo</p>
+<p>mkdir temp &amp;&amp; cd temp &amp;&amp;&nbsp;git svn init --no-metadata=
+&nbsp; <a class=3D"external-link" href=3D"https://10.8.0.53:8443/svn/code/=
+=E9=80=9A=E4=BF=A1=E5=B9=B3=E5=8F=B0=E7=A0=94=E5=8F=91/_1_=E5=BC=80=E5=8F=
+=91=E5=BA=93/code/_1_=E5=90=84=E9=A1=B9=E7=9B=AE=E5=88=86=E6=94=AF/_11_=E4=
+=B8=8A=E6=B5=B7=E6=97=A0=E8=BD=A8=E7=94=B5=E8=BD=A6" rel=3D"nofollow">https=
+://10.8.0.53:8443/svn/code/=E9=80=9A=E4=BF=A1=E5=B9=B3=E5=8F=B0=E7=A0=94=E5=
+=8F=91/_1_=E5=BC=80=E5=8F=91=E5=BA=93/code/_1_=E5=90=84=E9=A1=B9=E7=9B=AE=
+=E5=88=86=E6=94=AF/_11_=E4=B8=8A=E6=B5=B7=E6=97=A0=E8=BD=A8=E7=94=B5=E8=BD=
+=A6</a></p>
+<p># =E9=85=8D=E7=BD=AEgit=E7=94=A8=E6=88=B7=E6=96=87=E4=BB=B6</p>
+<p>git config svn.authorsfile ../users.txt</p>
+<p>git config --local <a class=3D"external-link" href=3D"http://user.name" =
+rel=3D"nofollow">user.name</a> wangwbe</p>
+<p>git config --local user.email <a class=3D"external-link" href=3D"mailto:=
+wangwbe@yutong.com" rel=3D"nofollow">wangwbe@yutong.com</a></p>
+<p># =E4=BB=8Esvn fetch=E6=96=87=E4=BB=B6</p>
+<p>git svn fetch</p>
+<p># =E4=BB=8E=E6=96=B0=E5=88=9B=E5=BB=BA=E7=9A=84svn repo=E4=B8=ADclone=E4=
+=B8=80=E4=B8=AAgit repo</p>
+<p>git clone . ../QD_CMP</p>
+<p>cd ../QD_CMP/</p>
+<p># gitlab=E4=B8=AD=E6=96=B0=E5=BB=BA=E4=BB=93=E5=BA=93=EF=BC=88=E7=94=A8=
+=E6=88=B7=E5=8F=AF=E8=AE=BF=E9=97=AE=EF=BC=89=EF=BC=8C=E6=9C=AC=E5=9C=B0=E7=
+=9A=84git=E9=A1=B9=E7=9B=AE=E4=B8=AD=E6=B7=BB=E5=8A=A0=E8=BF=9C=E7=A8=8B=E6=
+=96=B0=E5=BB=BA=E7=9A=84=E4=BB=93=E5=BA=93=EF=BC=8C=E5=B9=B6push=E5=88=B0=
+=E8=BF=9C=E7=A8=8B=E3=80=82</p>
+<p>git remote set-url origin <a class=3D"external-link" href=3D"mailto:git@=
+dev.yutong.com" rel=3D"nofollow">git@dev.yutong.com</a>:cp/CMP.git</p>
+<p>git push origin --all</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+    </div>
+</body>
+</html>
+------=_Part_463466_1286712680.1600049468138--

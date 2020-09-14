@@ -1,0 +1,5 @@
+export JAVA_HOME=/data/jdk1.8.0_131
+
+export CLASSPATH=.:/jre/lib/rt.jar:/lib/dt.jar:/lib/tools.jar
+
+PATH=$JAVA_HOME/bin:${MAVEN_HOME}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/data/software/nexus-3.22.0-02/bin:/usr/local/go/bin:$PATH
