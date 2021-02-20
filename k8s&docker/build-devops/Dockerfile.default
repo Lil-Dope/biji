@@ -1,0 +1,11 @@
+FROM harbor.niceloo.com:88/niceloo/centos:msv1
+MAINTAINER The CentOS Project <wxchenjt@yutong.com>
+
+RUN sed -i 's/selectenv/ENV/g' /run.sh \
+    sed -i 's/package_name/jarname/g' /run.sh \
+    sed -i 's/selectport/SERVICE_PORT/g' /run.sh \
+    sed -i 's/selectapollo/apolloenv/g' /run.sh \
+
+ADD PACKAGE_PATH /data/
+
+CMD ["/run.sh", "-D"]

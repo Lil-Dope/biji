@@ -1,0 +1,4 @@
+kubernetes
+docker
+ingress: traefik
+³Ö¾Ã»¯´æ´¢£ºglusterfs

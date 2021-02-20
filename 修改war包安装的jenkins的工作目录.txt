@@ -1,0 +1,36 @@
+修改war包安装的jenkins的工作目录
+
+部署jenkins的时候我是遇到了一个问题，可以说算是根据你自己的项目需求进行对你的jenkins进行修改，因为你去拉代码的时候，默认安装的jenkins的工作目录你可以看到是在.jenkins下，你安装的jenkins的配置还有你的拉代码进行编译的地方都是在这个工作目录下，我是部署了nfs这样的一个共享存储，我是希望将我们的项目单独放在这个共享存储文件下也方便我去进行管理，所以我进行了修改配置
+修改目录位置
+我的jenkins是在tomact容器下部署的war包
+所以我要在tomact的bin目录下修改,catalina.sh这个配置下进行添加参数
+#OS …上方添加配置
+
+export JENKINS_HOME=/home/jekins
+
+[root@master bin]# vim catalina.sh
+
+export JENKINS_HOME=/opt/k8s/project
+OS specific support. $var must be set to either true or false.
+cygwin=false
+darwin=false
+os400=false
+hpux=false
+case "uname" in
+CYGWIN) cygwin=true;;
+Darwin) darwin=true;;
+OS400) os400=true;;
+HP-UX) hpux=true;;
+esac
+
+resolve links - $0 may be a softlink
+
+修改 /etc/profile
+在web容器启动之前修改配置
+在profile文件内添加配置
+export JENKINS_HOME=/opt/k8s/project
+使profile文件生效即可
+
+source /etc/profile
+然后重启你的tomcat下的war包就可以了
+

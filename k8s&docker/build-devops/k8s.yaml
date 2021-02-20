@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: niceloo-micro-questionanswer
+   namespace: niceloo-ENV
+   labels:
+      app: dev
+spec:
+  revisionHistoryLimit: 5
+  replicas: REP
+  strategy:        #升级策略（默认为滚动升级，不需要修改）
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%        #滚动升级中，容器副本的最大数量（默认值，可根据实际情况修改）
+      maxUnavailable: 25%        #滚动升级中，容器副本停止的最大数量（默认值，可根据实际情况修改）
+    #type: Recreate
+  selector:
+    matchLabels:
+      app: niceloo-micro-questionanswer
+  template:
+    metadata:
+      labels:
+        app: niceloo-micro-questionanswer
+    spec: 
+      nodeSelector: 
+        role: ms-ENV
+      hostNetwork: true
+      containers:
+        - name: niceloo-micro-questionanswer
+          image: ProjectImage
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: 10997
+          volumeMounts:
+          - mountPath: /data/logs
+            name: app-logs
+          - mountPath: /etc/localtime
+            name: localtime
+
+      volumes:
+      - name: app-logs
+        hostPath:
+           path: /data/logs
+
+      - name: localtime
+        hostPath:
+           path: /etc/localtime
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: TemplateProject
+  name: niceloo-micro-questionanswer-dev
+  namespace: niceloo-dev
+spec:
+  ports:
+    - port: 80
+      targetPort: 10997
+  selector:
+    k8s-app: niceloo-micro-questionanswer
+
+---
+
+apiVersion: extensions/v1beta1
+
+kind: Ingress
+
+metadata:
+
+  name: TemplateProject-ENV
+
+  namespace: PROJECT_NS
+
+spec:
+
+  rules:
+
+  - host: TemplateProject-ENV.kube.com
+
+    http:
+
+      paths:
+
+      - path: /
+
+        backend:
+
+          serviceName: TemplateProject-ENV-service
+
+          servicePort: 80

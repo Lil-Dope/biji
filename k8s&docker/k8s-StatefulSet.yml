@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+  labels:
+    app: TemplateProject
+spec:
+  #podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  serviceName: TemplateProject
+  replicas: REP
+  selector:
+    matchLabels:
+      app: TemplateProject
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      name: TemplateProject
+      namespace: ENV
+      labels:
+        app: TemplateProject
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always #重启策略，Always、OnFailure、Never
+      #hostNetwork: true
+      containers:
+      - name: TemplateProject
+        image: ProjectImage
+        imagePullPolicy: Always
+                
+        env:
+        - name: AGENT_APOLLO_META
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: apollo-meta
+        - name: APP_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-profile
+        - name: APP_RUN_PARAM
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-run-param
+        - name: APP_MAX_MEMORY
+          valueFrom:
+            resourceFieldRef:
+              containerName: TemplateProject
+              resource: limits.memory
+        resources:
+          limits:
+            cpu: 400m
+            memory: 1024Mi
+          requests:
+            cpu: 400m
+            memory: 1024Mi
+        ports:
+        - name: http
+          containerPort: APP_PORT
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data/glusterfs
+          name: glusterfs
+          readOnly: false
+  volumeClaimTemplates:
+  - metadata:
+      name: glusterfs
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: glusterfs-storage
+      resources:
+        requests:
+          storage: 1Gi
+        limits:
+          storage: 1Gi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+  labels:
+    app: TemplateProject
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: APP_PORT
+      protocol: TCP
+      name: http
+  selector:
+    app: TemplateProject
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+spec:
+  rules:
+  - host: TemplateProject-ENV.kube.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: TemplateProject
+          servicePort: 80

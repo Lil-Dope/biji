@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: TemplateProject
+   namespace: PROJECT_NS
+   labels:
+      app: env
+spec:
+  revisionHistoryLimit: 5
+  replicas: REP
+  strategy:
+    #type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: TemplateProject
+  template:
+    metadata:
+      labels:
+        app: TemplateProject
+    spec: 
+      nodeSelector: 
+        role: ms-ENV
+      hostNetwork: true
+      #dnsPolicy: ClusterFirstWithHostNet
+      hostAliases:
+        - ip: "192.168.10.102"
+          hostnames:
+            - "ms.app"
+        - ip: "192.168.10.101"
+          hostnames:
+            - "ms.data"
+      containers:
+        - name: TemplateProject 
+          image: ProjectImage
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: APP_PORT
+          volumeMounts:
+          - mountPath: /data/logs
+            name: app-logs
+          - mountPath: /etc/localtime
+            name: localtime
+
+      volumes:
+      - name: app-logs
+        hostPath:
+           path: /data/logs
+
+      - name: localtime
+        hostPath:
+           path: /etc/localtime
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: TemplateProject-service-ENV
+  namespace: PROJECT_NS
+spec:
+   selector:
+     app: TemplateProject
+   ports:
+     - protocol: TCP
+       port: 80
+       targetPort: APP_PORT
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: TemplateProject-ENV
+  namespace: PROJECT_NS
+spec:
+  rules:
+  - host: TemplateProject-ENV.kube.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: TemplateProject-service-ENV
+          servicePort: 80

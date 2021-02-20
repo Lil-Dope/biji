@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: usercenter
+  namespace: dev
+  labels:
+    app: usercenter
+spec:
+  #podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  serviceName: usercenter
+  replicas: 2
+  selector:
+    matchLabels:
+      app: usercenter
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      name: usercenter
+      namespace: dev
+      labels:
+        app: usercenter
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always #重启策略，Always、OnFailure、Never
+      containers:
+      - name: usercenter
+        image: nexus.niceloo.com:8083/youlu/niceloo-usercenter:3.0.70
+        imagePullPolicy:
+        
+        env:
+        - name: APOLLO_META
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: apollo-meta
+        - name: APP_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-profile
+        - name: APP_RUN_PARAM
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-run-param
+        - name: APP_MAX_MEMORY
+          valueFrom:
+            resourceFieldRef:
+              containerName: usercenter
+              resource: limits.memory
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 1024Mi
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data/glusterfs
+          name: glusterfs
+          readOnly: false
+  volumeClaimTemplates:
+  - metadata:
+      name: glusterfs
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: glusterfs-storage
+      resources:
+        requests:
+          storage: 1Gi
+        limits:
+          storage: 1Gi
+
+---
+# Service 配置
+apiVersion: v1
+kind: Service
+metadata:
+  name: usercenter
+  namespace: dev
+  labels:
+    app: usercenter
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app: usercenter
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: usercenter
+  namespace: dev
+spec:
+  rules:
+  - host: usercenter-dev.kube.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: usercenter
+          servicePort: 80
