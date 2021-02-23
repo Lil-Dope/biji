@@ -1,0 +1,67 @@
+https://zhuanlan.zhihu.com/p/129867855
+
+版本回滚
+查看版本历史
+
+[root@kub-k8s-master prome]# kubectl rollout history deployment/dep02
+deployment.apps/dep02 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+回滚到以前的旧版本：
+
+把整个 Deployment 回滚到上一个版本：
+
+[root@kub-k8s-master prome]# kubectl rollout undo deployment/dep02
+deployment.apps/dep02 rolled back
+查看回滚状态
+
+[root@kub-k8s-master prome]# kubectl rollout status deployment/dep02
+deployment "dep02" successfully rolled out
+验证：
+
+[root@kub-k8s-master prome]# kubectl get pods
+NAME                                READY   STATUS             RESTARTS   AGE
+dep02-8594cd6447-pqtxk              1/1     Running            0          55s
+dep02-8594cd6447-tt4h4              1/1     Running            0          51s
+[root@kub-k8s-master prome]# kubectl exec -it dep02-8594cd6447-tt4h4 /bin/bash 
+root@dep02-8594cd6447-tt4h4:/# nginx -v 
+nginx version: nginx/1.14.2
+回滚到更早之前的版本:
+
+使用 kubectl rollout history 命令查看每次 Deployment 变更对应的版本。
+[root@kub-k8s-master prome]# kubectl rollout history deployment/dep02
+deployment.apps/dep02 
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+由于在创建这个 Deployment 的时候，指定了--record 参数，所以创建这些版本时执行的 kubectl 命令，都会被记录下来。
+
+查看每个版本对应的 Deployment 的 API 对象的细节：
+
+[root@kub-k8s-master prome]# kubectl rollout history deployment/dep02 --revision=3
+deployment.apps/dep02 with revision #3
+Pod Template:
+  Labels:   app=web1
+    pod-template-hash=8594cd6447
+  Containers:
+   testnginx9:
+    Image:  daocloud.io/library/nginx:1.14
+    Port:   80/TCP
+    Host Port:  0/TCP
+    Environment:    <none>
+    Mounts: <none>
+  Volumes:  <none> 
+2.在 kubectl rollout undo 命令行最后，加上要回滚到的指定版本的版本号，就可以回滚到指定版本了。
+
+[root@kub-k8s-master prome]# kubectl rollout undo deployment/dep02 --to-revision=2
+deployment.apps/dep02 rolled back
+验证：
+
+[root@kub-k8s-master prome]# kubectl get pods
+NAME                                READY   STATUS             RESTARTS   AGE
+dep02-78dbd944fc-8nvxl              1/1     Running            0          86s
+dep02-78dbd944fc-sb9sj              1/1     Running            0          88s
+[root@kub-k8s-master prome]# kubectl exec -it dep02-78dbd944fc-8nvxl /bin/bash 
+root@dep02-78dbd944fc-8nvxl:/# nginx -v
+nginx version: nginx/1.16.1
