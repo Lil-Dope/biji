@@ -1,0 +1,2 @@
+强制删除：
+kubectl -n dev delete pod courcenter-0 --grace-period=0 --force

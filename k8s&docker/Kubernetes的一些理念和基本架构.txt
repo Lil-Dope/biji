@@ -1,0 +1,23 @@
+我们先从整体上看一下Kubernetes的一些理念和基本架构，然后从网络、资源管理、存储、服务发现、负载均衡、高可用、rollingupgrade、安全、监控等方面向大家简单介绍Kubernetes的这些主要特性。　　当然也会包括一些需要注意的问题。主要目的是帮助大家快速理解Kubernetes的主要功能，今后在研究和使用这个具的时候有所参考和帮助。　　
+1.Kubernetes的一些理念：　　
+用户不需要关心需要多少台机器，只需要关心软件（服务）运行所需的环境。以服务为中心，你需要关心的是api，如何把大服务拆分成小服务，如何使用api去整合它们。　　保证系统总是按照用户指定的状态去运行。　　不仅仅提给你供容器服务，同样提供一种软件系统升级的方式；在保持HA的前提下去升级系统是很多用户最想要的功能，也是最难实现的。　　那些需要担心和不需要担心的事情。　　更好的支持微服务理念，划分、细分服务之间的边界，比如lablel、pod等概念的引入。　　对于Kubernetes的架构，可以参考官方文档。　　大致由一些主要组件构成，包括Master节点上的kube-apiserver、kube-scheduler、kube-controller-manager、控制组件kubectl、状态存储etcd、Slave节点上的kubelet、kube-proxy，以及底层的网络支持（可以用Flannel、OpenVSwitch、Weave等）。　　看上去也是微服务的架构设计，不过目前还不能很好支持单个服务的横向伸缩，但这个会在Kubernetes的未来版本中解决。　　
+
+2.Kubernetes的主要特性　　会从网络、服务发现、负载均衡、资源管理、高可用、存储、安全、监控等方面向大家简单介绍Kubernetes的这些主要特性->由于时间有限，只能简单一些了。　　另外，对于服务发现、高可用和监控的一些更详细的介绍，感兴趣的朋友可以通过这篇文章了解。　　
+1）网络　　Kubernetes的网络方式主要解决以下几个问题：　　
+a.紧耦合的容器之间通信，通过Pod和localhost访问解决。　　
+b.Pod之间通信，建立通信子网，比如隧道、路由，Flannel、OpenvSwitch、Weave。　　
+c.Pod和Service，以及外部系统和Service的通信，引入Service解决。　　Kubernetes的网络会给每个Pod分配一个IP地址，不需要在Pod之间建立链接，也基本不需要去处理容器和主机之间的端口映射。　　注意：Pod重建后，IP会被重新分配，所以内网通信不要依赖PodIP；通过Service环境变量或者DNS解决。　　
+
+2）服务发现及负载均衡　　kube-proxy和DNS，在v1之前，Service含有字段portalip和publicIPs，分别指定了服务的虚拟ip和服务的出口机ip，publicIPs可任意指定成集群中任意包含kube-proxy的节点，可多个。portalIp通过NAT的方式跳转到container的内网地址。在v1版本中，publicIPS被约定废除，标记为deprecatedPublicIPs，仅用作向后兼容，portalIp也改为ClusterIp,而在serviceport定义列表里，增加了nodePort项，即对应node上映射的服务端口。　　DNS服务以addon的方式，需要安装skydns和kube2dns。kube2dns会通过读取KubernetesAPI获取服务的clusterIP和port信息，同时以watch的方式检查service的变动，及时收集变动信息，并将对于的ip信息提交给etcd存档，而skydns通过etcd内的DNS记录信息，开启53端口对外提供服务。大概的DNS的域名记录是servicename.namespace.tenx.domain,逗tenx.domain地是提前设置的主域名。　　注意：kube-proxy在集群规模较大以后，可能会有访问的性能问题，可以考虑用其他方式替换，比如HAProxy，直接导流到Service的endpints或者Pods上。Kubernetes官方也在修复这个问题。　　
+
+3）资源管理　　有3个层次的资源限制方式，分别在Container、Pod、Namespace层次。Container层次主要利用容器本身的支持，比如Docker对CPU、内存、磁盘、网络等的支持；Pod方面可以限制系统内创建Pod的资源范围，比如最大或者最小的CPU、memory需求；Namespace层次就是对用户级别的资源限额了，包括CPU、内存，还可以限定Pod、rc、service的数量。　　资源管理模型－》简单、通用、准确，并可扩展　　目前的资源分配计算也相对简单，没有什么资源抢占之类的强大功能，通过每个节点上的资源总量、以及已经使用的各种资源加权和，来计算某个Pod优先非配到哪些节点，还没有加入对节点实际可用资源的评估，需要自己的schedulerplugin来支持。其实kubelet已经可以拿到节点的资源，只要进行收集计算即可，相信Kubernetes的后续版本会有支持。　　
+
+4）高可用　　主要是指Master节点的HA方式官方推荐利用etcd实现master选举，从多个Master中得到一个kube-apiserver保证至少有一个master可用，实现highavailability。对外以loadbalancer的方式提供入口。这种方式可以用作ha，但仍未成熟，据了解，未来会更新升级ha的功能。　　一张图帮助大家理解：　　也就是在etcd集群背景下，存在多个kube-apiserver，并用pod-master保证仅是主master可用。同时kube-sheduller和kube-controller-manager也存在多个，而且伴随着kube-apiserver同一时间只能有一套运行。　　
+
+5）rollingupgrade　　RC在开始的设计就是让rollingupgrade变的更容易，通过一个一个替换Pod来更新service，实现服务中断时间的最小化。基本思路是创建一个复本为1的新的rc，并逐步减少老的rc的复本、增加新的rc的复本，在老的rc数量为0时将其删除。　　通过kubectl提供，可以指定更新的镜像、替换pod的时间间隔，也可以rollback当前正在执行的upgrade操作。　　同样，Kuberntes也支持多版本同时部署，并通过lable来进行区分，在service不变的情况下，调整支撑服务的Pod，测试、监控新Pod的工作情况。　　
+
+6）存储　　大家都知道容器本身一般不会对数据进行持久化处理，在Kubernetes中，容器异常退出，kubelet也只是简单的基于原有镜像重启一个新的容器。另外，如果我们在同一个Pod中运行多个容器，经常会需要在这些容器之间进行共享一些数据。Kuberenetes的Volume就是主要来解决上面两个基础问题的。　　Docker也有Volume的概念，但是相对简单，而且目前的支持很有限，Kubernetes对Volume则有着清晰定义和广泛的支持。其中最核心的理念：Volume只是一个目录，并可以被在同一个Pod中的所有容器访问。而这个目录会是什么样，后端用什么介质和里面的内容则由使用的特定Volume类型决定。　　创建一个带Volume的Pod：　　spec.volumes指定这个Pod需要的volume信息spec.containers.volumeMounts指定哪些container需要用到这个VolumeKubernetes对Volume的支持非常广泛，有很多贡献者为其添加不同的存储支持，也反映出Kubernetes社区的活跃程度。　　emptyDir随Pod删除，适用于临时存储、灾难恢复、共享运行时数据，支持RAM-backedfilesystemhostPath类似于Docker的本地Volume用于访问一些本地资源（比如本地Docker）。　　gcePersistentDiskGCEdisk-只有在GoogleCloudEngine平台上可用。　　awsElasticBlockStore类似于GCEdisk节点必须是AWSEC2的实例nfs-支持网络文件系统。　　rbd-RadosBlockDevice-Ceph　　secret用来通过KubernetesAPI向Pod传递敏感信息，使用tmpfs（aRAM-backedfilesystem）　　persistentVolumeClaim-从抽象的PV中申请资源，而无需关心存储的提供方　　glusterfs　　iscsi　　gitRepo　　根据自己的需求选择合适的存储类型，反正支持的够多，总用一款适合的:）　　
+
+7）安全　　一些主要原则：　　基础设施模块应该通过APIserver交换数据、修改系统状态，而且只有APIserver可以访问后端存储（etcd）。　　把用户分为不同的角色：Developers/ProjectAdmins/Administrators。　　允许Developers定义secrets对象，并在pod启动时关联到相关容器。　　以secret为例，如果kubelet要去pull私有镜像，那么Kubernetes支持以下方式：　　通过dockerlogin生成.dockercfg文件，进行全局授权。　　通过在每个namespace上创建用户的secret对象，在创建Pod时指定imagePullSecrets属性（也可以统一设置在serviceAcouunt上），进行授权。　　认证（Authentication）　　APIserver支持证书、token、和基本信息三种认证方式。　　授权（Authorization）　　通过apiserver的安全端口，authorization会应用到所有http的请求上　　AlwaysDeny、AlwaysAllow、ABAC三种模式，其他需求可以自己实现Authorizer接口。　　
+
+8）监控　　比较老的版本Kubernetes需要外接cadvisor主要功能是将node主机的containermetrics抓取出来。在较新的版本里，cadvior功能被集成到了kubelet组件中，kubelet在与docker交互的同时，对外提供监控服务。　　Kubernetes集群范围内的监控主要由kubelet、heapster和storagebackend（如influxdb）构建。Heapster可以在集群范围获取metrics和事件数据。它可以以pod的方式运行在k8s平台里，也可以单独运行以standalone的方式。　　注意：heapster目前未到1.0版本，对于小规模的集群监控比较方便。但对于较大规模的集群，heapster目前的cache方式会吃掉大量内存。因为要定时获取整个集群的容器信息，信息在内存的临时存储成为问题，再加上heaspter要支持api获取临时metrics，如果将heapster以pod方式运行，很容易出现OOM。所以目前建议关掉cache并以standalone的方式独立出k8s平台。

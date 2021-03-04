@@ -1,0 +1,47 @@
+详谈kubernetes滚动更新-1
+https://www.cnblogs.com/tylerzhou/p/10995776.html
+
+
+
+
+#ingress中间件-Middleware：
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"traefik.containo.us/v1alpha1","kind":"Middleware","metadata":{"annotations":{},"name":"autodetect","namespace":"test"},"spec":{"contentType":{"autoDetect":false}}}
+  creationTimestamp: "2021-02-21T06:39:12Z"
+  generation: 1
+  name: autodetect
+  namespace: test
+  resourceVersion: "3422519"
+  uid: 44f507b1-481e-435c-a0b1-cdb9addc172b
+spec:
+  contentType:
+    autoDetect: false
+
+  
+  
+#ingress路由-IngressRoute
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: usercenter
+  namespace: dev
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`usercenter-dev.kube.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: usercenter
+      port: 80
+        # 中间件
+    middlewares:
+    - name: autodetect
+	
+	

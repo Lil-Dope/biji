@@ -1,0 +1,15 @@
+#配置ConfigMap
+
+apiVersion: v1
+data:
+  apollo-meta: http://192.168.10.118:8080
+  app-profile: fat
+  app-run-param: -Dapollo.meta=http://192.168.10.118:8080
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-01-28T03:20:12Z"
+  name: app-runtime-env
+  namespace: test
+  resourceVersion: "1696266"
+  uid: ea921e45-0bcf-466e-bfd1-0e8643c2696b
+
