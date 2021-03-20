@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+  labels:
+    app: TemplateProject
+spec:
+  #podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  serviceName: TemplateProject
+  replicas: REP
+  selector:
+    matchLabels:
+      app: TemplateProject
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      name: TemplateProject
+      namespace: ENV
+      labels:
+        app: TemplateProject
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always #重启策略，Always、OnFailure、Never
+      #hostNetwork: true
+      hostAliases:
+        - ip: "192.168.10.102"
+          hostnames:
+            - "ms.app"
+        - ip: "192.168.10.101"
+          hostnames:
+            - "ms.data"
+        - ip: "192.168.10.102"
+          hostnames:
+            - "dev-ms.app"
+        - ip: "192.168.10.101"
+          hostnames:
+            - "dev-ms.data"
+        - ip: "192.168.10.54"
+          hostnames:
+            - "test-ms.app"
+        - ip: "192.168.10.203"
+          hostnames:
+            - "test-ms.data"
+      
+      containers:
+      - name: TemplateProject
+        image: ProjectImage
+        imagePullPolicy: Always
+
+        readinessProbe:
+          # 指定最大失败次数
+          failureThreshold: 20
+          # 健康检查间隔，单位秒
+          periodSeconds: 5
+          # 成功认定次数，这里设置只要成功一次就是健康的
+          successThreshold: 1
+          # 请求超时时间，单位秒
+          timeoutSeconds: 3
+          httpGet:
+            scheme: HTTP
+            port: 30001
+            path: /
+ 
+        env:
+        - name: AGENT_APOLLO_META
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: apollo-meta
+        - name: APP_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-profile
+        - name: APP_RUN_PARAM
+          valueFrom:
+            configMapKeyRef:
+              name: app-runtime-env
+              key: app-run-param
+        - name: APP_MAX_MEMORY
+          valueFrom:
+            resourceFieldRef:
+              containerName: TemplateProject
+              resource: limits.memory
+        resources:
+          limits:
+            cpu: 400m
+            memory: 2048Mi
+          requests:
+            cpu: 400m
+            memory: 1024Mi
+        ports:
+        - name: http
+          containerPort: APP_PORT
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data/glusterfs
+          name: glusterfs
+          readOnly: false
+  volumeClaimTemplates:
+  - metadata:
+      name: glusterfs
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      storageClassName: glusterfs-storage
+      resources:
+        requests:
+          storage: 5Gi
+        limits:
+          storage: 20Gi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+  labels:
+    app: TemplateProject
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: APP_PORT
+      protocol: TCP
+      name: http
+  selector:
+    app: TemplateProject
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: TemplateProject
+  namespace: PROJECT_NS
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`TemplateProject-ENV.kube.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: TemplateProject
+      port: 80
+    middlewares:
+    - name: autodetect

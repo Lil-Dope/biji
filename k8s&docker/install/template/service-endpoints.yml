@@ -1,0 +1,31 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: midservice-msa
+  # 命名空间
+  namespace: prod
+spec:
+  ports:
+    # 容器内服务端口
+    - port: 80
+    # 真实业务端口
+      targetPort: 7010
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  # 和Service中的名称相同
+  name: midservice-msa
+  # 命名空间
+  namespace: prod
+subsets:
+  - addresses:
+    # 这里指向的是外部服务的ip(可以指定多个)
+    - ip: 172.31.3.85
+    - ip: 172.31.3.130
+
+    # 指定端口
+    ports:
+     # 真实业务端口，对应Service中的targetPort
+    - port: 7010
